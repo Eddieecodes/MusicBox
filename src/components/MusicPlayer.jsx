@@ -1,13 +1,7 @@
-import React from 'react'
-import Upload from './Upload'
+import React from "react";
 
 const MusicPlayer = () => {
-  return (
-    <div>
-      
-      <Upload/>
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default MusicPlayer
+export default MusicPlayer;
