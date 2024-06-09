@@ -2,7 +2,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Sidebar = ({ onButtonClick, IsOpen }) => {
+//props passed to sidebar from parent component
+const Sidebar = ({ onButtonClick, IsOpen, onButtonSongClick }) => {
   return (
     <div
       className={`fixed top-0 left-0 h-full w-64 bg-black border-r border-customPurple p-6 flex-col items-center transition-transform transform ${
@@ -16,10 +17,13 @@ const Sidebar = ({ onButtonClick, IsOpen }) => {
           className="h-12 mx-auto"
         />
       </div>
-      <div className="flex items-center space-x-2">
+      <button
+        className="flex items-center space-x-2"
+        onClick={onButtonSongClick}
+      >
         <img src="src/assets/mySongs.svg" alt="My Songs" className="h-12 w-8" />
         <span className="font-bold font-serif">My Songs</span>
-      </div>
+      </button>
       <button
         className="flex items-center space-x-2 mt-4"
         onClick={onButtonClick}
@@ -34,9 +38,10 @@ const Sidebar = ({ onButtonClick, IsOpen }) => {
     </div>
   );
 };
-
+//prop type validation
 Sidebar.propTypes = {
   onButtonClick: PropTypes.func.isRequired,
+  onButtonSongClick: PropTypes.func.isRequired,
   IsOpen: PropTypes.bool.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
 };
