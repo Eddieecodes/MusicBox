@@ -1,18 +1,17 @@
 import React from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 
 //function to handle fileupload
-const Upload = () => {
+const Upload = ({ onAddClick }) => {
   const handleFileUpload = (event) => {
     const files = event.target.files;
     const fileDisplay = document.getElementById("fileDisplay");
-  
+
     if (files.length > 0) {
       for (let i = 0; i < files.length; i++) {
         const fileNames = `<div class="inline-block m-2 bg-customPurple border px-3 border-purple-600 w-20 rounded-md overflow-hidden overflow-ellipsis whitespace-nowrap">${files[i].name}</div>`;
         fileDisplay.innerHTML += fileNames;
       }
-      
     } else {
       fileDisplay.innerHTML = "No file chosen";
     }
@@ -38,11 +37,13 @@ const Upload = () => {
                 type="file"
                 onChange={handleFileUpload}
                 style={{ display: "none" }}
-               
               />
               Upload Music
             </button>
-            <button className="bg-customPurple px-8 py-1 rounded hover:cursor-pointer">
+            <button
+              className="bg-customPurple px-8 py-1 rounded hover:cursor-pointer"
+              onClick={onAddClick}
+            >
               Add
             </button>
           </div>
@@ -51,5 +52,7 @@ const Upload = () => {
     </div>
   );
 };
-
+Upload.propTypes = {
+  onAddClick: PropTypes.func.isRequired,
+};
 export default Upload;
