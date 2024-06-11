@@ -45,6 +45,7 @@ function App() {
         {showSong && <DisplaySongs />}
         <MusicPlayer />
       </div>
+      
     </div>
   );
 }

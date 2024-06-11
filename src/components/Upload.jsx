@@ -1,21 +1,22 @@
-// src/components/Upload.js
 import React from "react";
 // import PropTypes from "prop-types";
 
 //function to handle fileupload
 const Upload = () => {
   const handleFileUpload = (event) => {
-    const file = event.target.files[0];
+    const files = event.target.files;
     const fileDisplay = document.getElementById("fileDisplay");
-    console.log("selected file", file);
-    if (file) {
-      // onUpload(file);
-      fileDisplay.innerHTML = `${file.name}`;
+  
+    if (files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        const fileNames = `<div class="inline-block m-2 bg-customPurple border px-3 border-purple-600 w-20 rounded-md overflow-hidden overflow-ellipsis whitespace-nowrap">${files[i].name}</div>`;
+        fileDisplay.innerHTML += fileNames;
+      }
+      
     } else {
-      fileDisplay.innerHTML = "No file choosen";
+      fileDisplay.innerHTML = "No file chosen";
     }
   };
-
   return (
     <div className="min-h-screen mt-12 md:mt-0 flex flex-col  ">
       <div className=" p-6">
@@ -24,7 +25,7 @@ const Upload = () => {
       <div className="md:flex-1 flex justify-center items-center">
         <div className="flex flex-col bg-uploadBackground rounded-md p-8">
           <div
-            className="mt-1  w-full text-sm text-white bg-gray-900/30 p-6 rounded-lg  cursor-pointer focus:outline-none"
+            className="mt-1  w-full text-sm text-white bg-gray-900/100 p-6 rounded-lg  cursor-pointer focus:outline-none"
             id="fileDisplay"
           ></div>
           <div className="flex mt-4 justify-between items-center gap-3">
@@ -37,6 +38,7 @@ const Upload = () => {
                 type="file"
                 onChange={handleFileUpload}
                 style={{ display: "none" }}
+               
               />
               Upload Music
             </button>
@@ -49,7 +51,5 @@ const Upload = () => {
     </div>
   );
 };
-// Upload.propTypes = {
-//   onUpload: PropTypes.func.isRequired,
-// };
+
 export default Upload;
