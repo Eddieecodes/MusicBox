@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-//props passed to sidebar from parent component
+// props passed to sidebar from parent component
 const Sidebar = ({ onButtonClick, IsOpen, onButtonSongClick }) => {
   return (
     <div
@@ -38,12 +38,13 @@ const Sidebar = ({ onButtonClick, IsOpen, onButtonSongClick }) => {
     </div>
   );
 };
-//prop type validation
+
+// prop type validation
 Sidebar.propTypes = {
   onButtonClick: PropTypes.func.isRequired,
   onButtonSongClick: PropTypes.func.isRequired,
   IsOpen: PropTypes.bool.isRequired,
-  toggleSidebar: PropTypes.func.isRequired,
+  // toggleSidebar: PropTypes.func.isRequired,
 };
 
 export default Sidebar;
