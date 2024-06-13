@@ -13,7 +13,7 @@ const DisplaySongs = ({ allSongs }) => {
       </div>
       {allSongs?.map((song) => (
         <div className="bg-red-700 h-14 p-2" key={song.id}>
-          <h2>No songs</h2>
+          {/* <h2>No songs</h2> */}
         </div>
       ))}
     </div>

@@ -6,9 +6,9 @@ import Upload from "./components/Upload";
 import DisplaySongs from "./components/DisplaySong";
 import Dexie from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
+import jsmediatags from "jsmediatags";
 
-// npm install dexie to create dexie js
-// created database called musicbox
+// Create the Dexie database
 const db = new Dexie("MusicBox");
 db.version(1).stores({
   Songs: "++id, title, artist, duration",
@@ -17,39 +17,65 @@ db.version(1).stores({
 const { Songs } = db;
 
 function App() {
-  // uselivequery allows the app to watch for CRUD in db, it also requires a dependency array
   const allSongs = useLiveQuery(() => Songs.toArray(), []);
   console.log(allSongs);
 
-  // add songs function
-  const addSongs = async () => {
-    const songField = document.querySelector("#fileDisplay"); // note, i think it's not properly reading the filedisplay id
-    console.log(songField.value);
-
-    await Songs.add({
-      song: songField.value,
-    });
-    // this ought to refresh the filedisplay to be empty after add is clicked.
-    songField.value = "";
+  //to read the file and convert the time from second to minute-second
+  const formatDuration = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
   };
 
-  // state to handle the current view
-  const [currentView, setCurrentView] = useState("upload");
+  //async function to add the songs to the db
+  const addSongs = async (files) => {
+    if (!files.length) return;
 
-  const handleClickUpload = () => {
-    setCurrentView("upload");
-    toggleSidebar();
+    for (const file of files) {
+      jsmediatags.read(file, {
+        onSuccess: async (tag) => {
+          const { title, artist } = tag.tags;
+
+          // Create a new audio element to read the duration
+          const audio = new Audio(URL.createObjectURL(file));
+          audio.addEventListener("loadedmetadata", async () => {
+            const duration = audio.duration; // Get the duration in seconds
+            const formattedDuration = formatDuration(duration); // Format duration
+
+            await Songs.add({
+              title: title || file.name,
+              artist: artist || "Unknown Artist",
+              duration: formattedDuration,
+            });
+
+            console.log("Song added successfully");
+          });
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    }
+  };
+
+  const [showUpload, setShowUpload] = useState(true); // Default to show upload component
+  const [showSong, setShowSong] = useState(false);
+  const [IsOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    setShowUpload(true);
+    setShowSong(false);
+    setIsOpen(false); // Close the sidebar on mobile after clicking the button
     console.log("clicked add");
   };
 
   const handleClickSong = () => {
-    setCurrentView("songs");
-    toggleSidebar();
+    setShowUpload(false);
+    setShowSong(true);
+    setIsOpen(false); // Close the sidebar on mobile after clicking the button
     console.log("clicked song");
   };
 
-  // state to toggle the sidebar when menu icon is clicked
-  const [IsOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => {
     setIsOpen(!IsOpen);
   };
@@ -57,7 +83,7 @@ function App() {
   return (
     <div className="min-h-screen bg-black text-white flex justify-center items-center">
       <Sidebar
-        onButtonClick={handleClickUpload}
+        onButtonClick={handleClick}
         IsOpen={IsOpen}
         toggleSidebar={toggleSidebar}
         onButtonSongClick={handleClickSong}
@@ -70,16 +96,15 @@ function App() {
         <img src="src/assets/hamburgerMenu.svg" alt="menu-icon" />
       </button>
       <div className="flex-1 ml-0 md:ml-64">
-        {currentView === "upload" && <Upload onAddClick={addSongs} />}
-        {currentView === "songs" && <DisplaySongs allSongs={allSongs} />}
+        {showUpload && <Upload onAddClick={addSongs} />}
+        {showSong && <DisplaySongs allSongs={allSongs} />}
         <MusicPlayer />
       </div>
     </div>
   );
 }
 
-// prop validation
-App.proTypes = {
+App.propTypes = {
   children: PropTypes.node,
 };
 
