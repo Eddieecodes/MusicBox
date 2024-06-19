@@ -15,8 +15,10 @@ const DisplaySongs = ({ allSongs }) => {
         allSongs.map((song) => (
           <div key={song.id} className="bg-gray-800 p-4 rounded-lg mb-2">
             <h2 className="text-lg font-bold">{song.title}</h2>
-            <p className="text-sm text-gray-400">{song.artist}</p>
-            <p className="text-sm text-gray-400">{song.duration}</p>
+            <p className="text-sm text-gray-400">
+              {song.artist} {song.duration}
+            </p>
+            {/* <p className="text-sm text-gray-400">{song.duration}</p> */}
           </div>
         ))
       ) : (
