@@ -11,32 +11,17 @@ const DisplaySongs = ({ allSongs }) => {
           placeholder="Search for your songs"
         />
       </div>
-      {allSongs?.length > 0 ? (
-        allSongs.map((song) => (
-          <div className="bg-gray-400 h-14 p-2" key={song.id}>
-            <h2>{song.title}</h2>
-            <p>
-              {song.artist} {song.duration}
-            </p>
-            {/* <p>{song.duration}</p> */}
-          </div>
-        ))
-      ) : (
-        <p>No songs available</p>
-      )}
+      {allSongs?.map((song) => (
+        <div className="bg-red-700 h-14 p-2" key={song.id}>
+          {/* <h2>No songs</h2> */}
+        </div>
+      ))}
     </div>
   );
 };
 
 DisplaySongs.propTypes = {
-  allSongs: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      artist: PropTypes.string.isRequired,
-      duration: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  allSongs: PropTypes.func.isRequired,
 };
 
 export default DisplaySongs;
