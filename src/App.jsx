@@ -10,6 +10,8 @@ import jsmediatags from "jsmediatags";
 
 // Create the Dexie database
 const db = new Dexie("MusicBox");
+
+//declare tables
 db.version(1).stores({
   Songs: "++id, title, artist, duration",
 });
@@ -29,7 +31,7 @@ function App() {
 
   //async function to add the songs to the db
   const addSongs = async (files) => {
-    if (!files.length) return;
+    if (!files.length) return; //checks if no file is uploaded
 
     for (const file of files) {
       jsmediatags.read(file, {
