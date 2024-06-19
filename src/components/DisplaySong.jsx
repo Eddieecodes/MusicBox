@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const DisplaySongs = ({ allSongs }) => {
+const DisplaySongs = ({ allSongs,playSong }) => {
   return (
     <div className="min-h-screen mt-12 md:mt-0 flex flex-col p-2  ">
       <div className=" p-6 flex justify-between">
@@ -13,12 +13,22 @@ const DisplaySongs = ({ allSongs }) => {
       </div>
       {allSongs?.length ? (
         allSongs.map((song) => (
-          <div key={song.id} className="bg-gray-800 p-4 rounded-lg mb-2">
-            <h2 className="text-lg font-bold">{song.title}</h2>
+          <div 
+              key={song.id} 
+              className=" p-4 rounded-lg mb-2 max-w-xs md:max-w-sm lg:max-w-full"
+              onClick={() => playSong(song)}
+              >
+            <div className="bg-white">
+              <img
+                src="src/assets/musicIcon.svg"
+                
+                className="rounded-lg w-16 h-16 object-cover"
+              />
+            </div>
+            <h2 className="text-lg font-bold truncate">{song.title}</h2>
             <p className="text-sm text-gray-400">
               {song.artist} {song.duration}
             </p>
-            {/* <p className="text-sm text-gray-400">{song.duration}</p> */}
           </div>
         ))
       ) : (
@@ -30,5 +40,6 @@ const DisplaySongs = ({ allSongs }) => {
 
 DisplaySongs.propTypes = {
   allSongs: PropTypes.array.isRequired,
+  playSong: PropTypes.func.isRequired,
 };
 export default DisplaySongs;

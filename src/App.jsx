@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useRef } from "react";
 import PropTypes from "prop-types";
 import MusicPlayer from "./components/MusicPlayer";
 import Sidebar from "./components/Sidebar";
@@ -37,17 +37,18 @@ function App() {
       jsmediatags.read(file, {
         onSuccess: async (tag) => {
           const { title, artist } = tag.tags;
-
-          // Create a new audio element to read the duration
           const audio = new Audio(URL.createObjectURL(file));
           audio.addEventListener("loadedmetadata", async () => {
-            const duration = audio.duration; // Get the duration in seconds
-            const formattedDuration = formatDuration(duration); // Format duration
+            const duration = audio.duration;
+            const formattedDuration = formatDuration(duration);
+
+            const fileData = await file.arrayBuffer(); // Convert the file to an ArrayBuffer
 
             await Songs.add({
               title: title || file.name,
               artist: artist || "Unknown Artist",
               duration: formattedDuration,
+              fileData, // Store the file data as an ArrayBuffer
             });
 
             console.log("Song added successfully");
@@ -63,6 +64,33 @@ function App() {
   const [showUpload, setShowUpload] = useState(true); // Default to show upload component
   const [showSong, setShowSong] = useState(false);
   const [IsOpen, setIsOpen] = useState(false);
+  const [currentSong, setCurrentSong] = useState(null);
+  const audioRef = useRef(null);
+
+  const playSong = async (song) => {
+    setCurrentSong(song);
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+
+      const handleCanPlay = () => {
+        audioRef.current.play().catch(error => console.log("Error playing audio:", error));
+        audioRef.current.removeEventListener("canplay", handleCanPlay);
+      };
+
+      // Remove previous event listener if any
+      audioRef.current.removeEventListener("canplay", handleCanPlay);
+
+      // Create a blob URL from the file data
+      const blob = new Blob([song.fileData]);
+      const blobUrl = URL.createObjectURL(blob);
+
+      audioRef.current.src = blobUrl;
+      audioRef.current.load();
+      audioRef.current.addEventListener("canplay", handleCanPlay);
+    }
+  };
+
 
   const handleClick = () => {
     setShowUpload(true);
@@ -99,8 +127,10 @@ function App() {
       </button>
       <div className="flex-1 ml-0 md:ml-64">
         {showUpload && <Upload onAddClick={addSongs} />}
-        {showSong && <DisplaySongs allSongs={allSongs} />}
-        <MusicPlayer />
+        {showSong && <DisplaySongs allSongs={allSongs}  playSong={playSong}/>}
+        {currentSong && (
+          <MusicPlayer song={currentSong} audioRef={audioRef} /> 
+        )}
       </div>
     </div>
   );
