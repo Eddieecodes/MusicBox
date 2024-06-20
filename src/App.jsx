@@ -107,7 +107,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex justify-center items-center">
+    <div className="min-h-screen  bg-black text-white flex justify-center items-center">
       <Sidebar
         onButtonClick={handleClick}
         IsOpen={IsOpen}
