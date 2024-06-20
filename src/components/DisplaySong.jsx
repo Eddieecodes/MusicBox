@@ -15,21 +15,23 @@ const DisplaySongs = ({ allSongs,playSong }) => {
         allSongs.map((song) => (
           <div 
               key={song.id} 
-              className=" p-4 rounded-lg mb-2 max-w-xs md:max-w-sm lg:max-w-full"
+              className="flex space-x-8 p-4 rounded-lg mb-2 max-w-xs md:max-w-sm lg:max-w-full  hover:bg-gray-700 cursor-pointer`"
               onClick={() => playSong(song)
               }
               >
-            <div className="bg-white">
+            <div className="">
               <img
                 src="src/assets/musicIcon.svg"
-                
+                alt="music-icon"
                 className="rounded-lg w-16 h-16 object-cover"
               />
             </div>
-            <h2 className="text-lg font-bold truncate">{song.title}</h2>
-            <p className="text-sm text-gray-400">
+            <div>
+            <h2 className="text-lg  font-bold truncate">{song.title}</h2>
+            <p className="text-sm ">
               {song.artist} {song.duration}
             </p>
+            </div>
           </div>
         ))
       ) : (
