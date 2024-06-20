@@ -13,7 +13,7 @@ const MusicPlayer = ({ song, audioRef }) => {
           </div>
           <audio ref={audioRef} controls className="w-full" />
         </>
-      ) : (
+      ) : ( 
         <p className="text-white">No song selected</p>
       )}
     </div>
