@@ -16,7 +16,8 @@ const DisplaySongs = ({ allSongs,playSong }) => {
           <div 
               key={song.id} 
               className=" p-4 rounded-lg mb-2 max-w-xs md:max-w-sm lg:max-w-full"
-              onClick={() => playSong(song)}
+              onClick={() => playSong(song)
+              }
               >
             <div className="bg-white">
               <img

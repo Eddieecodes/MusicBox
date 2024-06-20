@@ -20,8 +20,6 @@ const { Songs } = db;
 
 function App() {
   const allSongs = useLiveQuery(() => Songs.toArray(), []);
-  console.log(allSongs);
-
   //to read the file and convert the time from second to minute-second
   const formatDuration = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -50,8 +48,6 @@ function App() {
               duration: formattedDuration,
               fileData, // Store the file data as an ArrayBuffer
             });
-
-            console.log("Song added successfully");
           });
         },
         onError: (error) => {
@@ -96,14 +92,14 @@ function App() {
     setShowUpload(true);
     setShowSong(false);
     setIsOpen(false); // Close the sidebar on mobile after clicking the button
-    console.log("clicked add");
+
   };
 
   const handleClickSong = () => {
     setShowUpload(false);
     setShowSong(true);
-    setIsOpen(false); // Close the sidebar on mobile after clicking the button
-    console.log("clicked song");
+    setIsOpen(false);
+   
   };
 
   const toggleSidebar = () => {

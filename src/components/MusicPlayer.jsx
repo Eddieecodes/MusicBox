@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const MusicPlayer = ({ song, audioRef }) => {
+  console.log("audioRef", audioRef);
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-red-500 p-4 flex items-center justify-between border-t border-gray-700">
       {song ? (
         <>
-        console.log("song",song)
           <div className="text-white">
             <p className="text-lg font-bold">{song.title}</p>
             <p className="text-sm text-gray-400">{song.artist}</p>
