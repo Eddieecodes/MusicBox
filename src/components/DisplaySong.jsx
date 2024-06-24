@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const DisplaySongs = ({ allSongs,playSong }) => {
+const DisplaySongs = ({ allSongs, playSong }) => {
   return (
     <div className="min-h-screen mt-12 md:mt-0 flex flex-col p-2  ">
       <div className=" p-6 flex justify-between">
@@ -13,24 +13,23 @@ const DisplaySongs = ({ allSongs,playSong }) => {
       </div>
       {allSongs?.length ? (
         allSongs.map((song) => (
-          <div 
-              key={song.id} 
-              className="flex space-x-8 p-4 rounded-lg mb-2 max-w-xs md:max-w-sm lg:max-w-full  hover:bg-gray-700 cursor-pointer`"
-              onClick={() => playSong(song)
-              }
-              >
+          <div
+            key={song.id}
+            className="flex space-x-8 p-4 rounded-lg mb-2 max-w-xs md:max-w-sm lg:max-w-full  hover:bg-gray-700 cursor-pointer`"
+            onClick={() => playSong(song)}
+          >
             <div className="">
               <img
-                src="src/assets/musicIcon.svg"
+                src="/assets/musicIcon.svg"
                 alt="music-icon"
                 className="rounded-lg w-16 h-16 object-cover"
               />
             </div>
             <div>
-            <h2 className="text-lg  font-bold truncate">{song.title}</h2>
-            <p className="text-sm ">
-              {song.artist} {song.duration}
-            </p>
+              <h2 className="text-lg  font-bold truncate">{song.title}</h2>
+              <p className="text-sm ">
+                {song.artist} {song.duration}
+              </p>
             </div>
           </div>
         ))

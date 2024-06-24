@@ -11,17 +11,13 @@ const Sidebar = ({ onButtonClick, IsOpen, onButtonSongClick }) => {
       } md:flex md:fixed md:left-0 md:top-0 md:h-full md:w-64 md:bg-black md:border-r md:border-customPurple md:p-6 md:flex-col md:items-center`}
     >
       <div className="mb-6">
-        <img
-          src="src/assets/logo.svg"
-          alt="App Logo"
-          className="h-12 mx-auto"
-        />
+        <img src="/assets/logo.svg" alt="App Logo" className="h-12 mx-auto" />
       </div>
       <button
         className="flex items-center space-x-2"
         onClick={onButtonSongClick}
       >
-        <img src="src/assets/mySongs.svg" alt="My Songs" className="h-12 w-8" />
+        <img src="/assets/mySongs.svg" alt="My Songs" className="h-12 w-8" />
         <span className="font-bold font-serif">My Songs</span>
       </button>
       <button
@@ -29,7 +25,7 @@ const Sidebar = ({ onButtonClick, IsOpen, onButtonSongClick }) => {
         onClick={onButtonClick}
       >
         <img
-          src="src/assets/addMusic.svg"
+          src="/assets/addMusic.svg"
           alt="Add Music Icon"
           className="h-8 w-8"
         />
