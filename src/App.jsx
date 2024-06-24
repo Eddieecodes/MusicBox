@@ -55,6 +55,7 @@ function App() {
         },
       });
     }
+    alert("Song added");
   };
 
   const [showUpload, setShowUpload] = useState(true); // Default to show upload component
