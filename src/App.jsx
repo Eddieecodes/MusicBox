@@ -1,4 +1,4 @@
-import { useState,useRef } from "react";
+import { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import MusicPlayer from "./components/MusicPlayer";
 import Sidebar from "./components/Sidebar";
@@ -70,7 +70,9 @@ function App() {
       audioRef.current.pause();
 
       const handleCanPlay = () => {
-        audioRef.current.play().catch(error => console.log("Error playing audio:", error));
+        audioRef.current
+          .play()
+          .catch((error) => console.log("Error playing audio:", error));
         audioRef.current.removeEventListener("canplay", handleCanPlay);
       };
 
@@ -87,19 +89,16 @@ function App() {
     }
   };
 
-
   const handleClick = () => {
     setShowUpload(true);
     setShowSong(false);
     setIsOpen(false); // Close the sidebar on mobile after clicking the button
-
   };
 
   const handleClickSong = () => {
     setShowUpload(false);
     setShowSong(true);
     setIsOpen(false);
-   
   };
 
   const toggleSidebar = () => {
@@ -119,14 +118,12 @@ function App() {
         className="fixed top-2 right-4 hover:cursor-pointer md:hidden"
         onClick={toggleSidebar}
       >
-        <img src="src/assets/hamburgerMenu.svg" alt="menu-icon" />
+        <img src="/assets/hamburgerMenu.svg" alt="menu-icon" />
       </button>
       <div className="flex-1 ml-0 md:ml-64">
         {showUpload && <Upload onAddClick={addSongs} />}
-        {showSong && <DisplaySongs allSongs={allSongs}  playSong={playSong}/>}
-        {currentSong && (
-          <MusicPlayer song={currentSong} audioRef={audioRef} /> 
-        )}
+        {showSong && <DisplaySongs allSongs={allSongs} playSong={playSong} />}
+        {currentSong && <MusicPlayer song={currentSong} audioRef={audioRef} />}
       </div>
     </div>
   );
