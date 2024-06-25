@@ -78,11 +78,11 @@ function App() {
         audioRef.current
           .play()
           .catch((error) => console.log("Error playing audio:", error));
-        audioRef.current.removeEventListener("canplay", handleCanPlay);
+       // audioRef.current.removeEventListener("canplay", handleCanPlay);
       };
 
       // Remove previous event listener if any
-      audioRef.current.removeEventListener("canplay", handleCanPlay);
+      //audioRef.current.removeEventListener("canplay", handleCanPlay);
 
       // Create a blob URL from the file data
       const blob = new Blob([song.fileData]);
@@ -111,7 +111,8 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen  bg-black text-white flex justify-center items-center">
+    <div class="overflow-x-hidden bg-black min-h-screen w-full max-w-full">
+    <div className=" container mx-auto px-4  text-white flex justify-center items-center">
       <Sidebar
         onButtonClick={handleClick}
         IsOpen={IsOpen}
@@ -130,6 +131,7 @@ function App() {
         {showSong && <DisplaySongs allSongs={allSongs} playSong={playSong} />}
         {currentSong && <MusicPlayer song={currentSong} audioRef={audioRef} />}
       </div>
+    </div>
     </div>
   );
 }

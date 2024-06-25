@@ -39,7 +39,8 @@ const Upload = ({ onAddClick }) => {
           <div
             className="mt-1 w-full text-sm text-white bg-gray-900/100 p-6 rounded-lg cursor-pointer focus:outline-none"
             id="fileDisplay"
-          ></div>
+          >
+          </div>
           <div className="flex mt-4 justify-between items-center gap-3">
             <button
               className="border border-customPurple px-3 py-2 text-sm font-normal hover:cursor-pointer rounded"
@@ -47,17 +48,17 @@ const Upload = ({ onAddClick }) => {
             >
               <input
                 id="fileInput"
+                accept="audio/mp3, audio/wav, audio/mpeg,audio/mp4"
                 type="file"
                 onChange={handleFileUpload}
                 style={{ display: "none" }}
-                multiple // Allow multiple file selection
+                multiple 
               />
               Upload Music
             </button>
             <button
               className="bg-customPurple px-8 py-1 rounded hover:cursor-pointer"
               onClick={() => onAddClick(selectedFiles)}
-              // onClick={() => onAddClickAlert()}
             >
               Add
             </button>
@@ -70,7 +71,6 @@ const Upload = ({ onAddClick }) => {
 
 Upload.propTypes = {
   onAddClick: PropTypes.func.isRequired,
-  // onAddClickAlert: PropTypes.func.isRequired,
 };
 
 export default Upload;

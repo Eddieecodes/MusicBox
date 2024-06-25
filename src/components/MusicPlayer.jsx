@@ -11,7 +11,7 @@ const MusicPlayer = ({ song, audioRef }) => {
             <p className="text-lg font-bold">{song.title}</p>
             <p className="text-sm text-gray-400">{song.artist}</p>
           </div>
-          <audio ref={audioRef} controls className="w-full" />
+          <audio ref={audioRef} autoPlay controls className="w-full" />
         </>
       ) : ( 
         <p className="text-white">No song selected</p>
