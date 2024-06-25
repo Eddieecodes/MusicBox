@@ -27,6 +27,10 @@ function App() {
     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
   };
 
+  // const showAlert = () => {
+  //   alert("Button clicked!");
+  // };
+
   //async function to add the songs to the db
   const addSongs = async (files) => {
     if (!files.length) return; //checks if no file is uploaded
@@ -55,7 +59,7 @@ function App() {
         },
       });
     }
-    alert("Song added");
+    alert("Song added, go to my songs");
   };
 
   const [showUpload, setShowUpload] = useState(true); // Default to show upload component

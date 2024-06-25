@@ -57,6 +57,7 @@ const Upload = ({ onAddClick }) => {
             <button
               className="bg-customPurple px-8 py-1 rounded hover:cursor-pointer"
               onClick={() => onAddClick(selectedFiles)}
+              // onClick={() => onAddClickAlert()}
             >
               Add
             </button>
@@ -69,6 +70,7 @@ const Upload = ({ onAddClick }) => {
 
 Upload.propTypes = {
   onAddClick: PropTypes.func.isRequired,
+  // onAddClickAlert: PropTypes.func.isRequired,
 };
 
 export default Upload;
