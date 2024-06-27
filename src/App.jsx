@@ -9,14 +9,22 @@ import { useLiveQuery } from "dexie-react-hooks";
 import jsmediatags from "jsmediatags";
 
 // Create the Dexie database
-const db = new Dexie("MusicBox");
+// Create the Dexie databases
+const metadataDb = new Dexie("MusicBoxMetadata");
+const fileDataDb = new Dexie("MusicBoxFileData");
 
-//declare tables
-db.version(1).stores({
+
+// Declare tables for both databases
+metadataDb.version(1).stores({
   Songs: "++id, title, artist, duration",
 });
 
-const { Songs } = db;
+fileDataDb.version(1).stores({
+  SongsData: "++id, fileData",
+});
+
+const { Songs } = metadataDb;
+const { SongsData } = fileDataDb;
 
 function App() {
   const allSongs = useLiveQuery(() => Songs.toArray(), []);
@@ -46,11 +54,16 @@ function App() {
 
             const fileData = await file.arrayBuffer(); // Convert the file to an ArrayBuffer
 
-            await Songs.add({
+            const id = await Songs.add({
               title: title || file.name,
               artist: artist || "Unknown Artist",
               duration: formattedDuration,
+            });
+
+            await SongsData.add({
+              id, // Use the same id from metadataDb
               fileData, // Store the file data as an ArrayBuffer
+             
             });
           });
         },
@@ -73,25 +86,32 @@ function App() {
 
     if (audioRef.current) {
       audioRef.current.pause();
-
+      }
       const handleCanPlay = () => {
         audioRef.current
           .play()
           .catch((error) => console.log("Error playing audio:", error));
-       // audioRef.current.removeEventListener("canplay", handleCanPlay);
-      };
+        audioRef.current.removeEventListener("canplay", handleCanPlay);
+     };
 
       // Remove previous event listener if any
       //audioRef.current.removeEventListener("canplay", handleCanPlay);
 
+     // Get file data from fileDataDb
+    const songData = await SongsData.get(song.id);
+    if (songData && songData.fileData) {
       // Create a blob URL from the file data
-      const blob = new Blob([song.fileData]);
+      const blob = new Blob([songData.fileData]);
       const blobUrl = URL.createObjectURL(blob);
 
       audioRef.current.src = blobUrl;
       audioRef.current.load();
       audioRef.current.addEventListener("canplay", handleCanPlay);
+    } else {
+      console.log("File data not found for song id:", song.id);
     }
+  
+    // }
   };
 
   const handleClick = () => {
